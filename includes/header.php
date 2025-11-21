@@ -7,3 +7,10 @@
     <title>Utrechts Archief</title>
 </head>
 <body>
+
+<header>
+<div class="header-container">
+    <img src="img/logo.png" alt="logo Utrechts Archief" class="logo">
+
+
+</header>

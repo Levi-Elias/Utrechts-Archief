@@ -1,0 +1,17 @@
+main .panorama {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+.container-header {
+  background-color: #ffffff;
+  text-align: center;
+  color: black;
+}   
+.logo {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+}
