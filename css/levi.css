@@ -1,0 +1,100 @@
+main .panorama {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+.container-header {
+  background-color: #ffffff;
+  text-align: center;
+  color: black;
+}   
+.logo {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+}
+
+/* Header - fixed, gray, compact */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 56px; /* compact height */
+  background: #e9e9e9; /* grijs, aanpasbaar */
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center the title */
+  position: relative;
+}
+
+.site-title {
+  margin: 0;
+  font-size: 1rem; /* niet te groot */
+  font-weight: 600;
+  color: #111;
+  /* Font stack: dicht bij zakelijke/site-typografie (pas aan indien je een specifieke font-bestand wilt gebruiken) */
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Logo stays left while title remains centered */
+.site-header .logo {
+  position: absolute;
+  left: 12px;
+  width: 44px;
+  height: auto;
+}
+
+/* Prevent content from being hidden behind header */
+body {
+  padding-top: 56px;
+}
+
+/* iPad / tablet specific adjustments */
+/* iPad landscape and similar tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .site-header {
+    height: 56px;
+  }
+  .site-title {
+    font-size: 1rem;
+  }
+  .site-header .logo {
+    width: 42px;
+    left: 14px;
+  }
+  body {
+    padding-top: 56px;
+  }
+}
+
+/* iPad portrait / smaller tablets and phones */
+@media (max-width: 767px) {
+  .site-header {
+    height: 52px;
+  }
+  .site-title {
+    font-size: 0.95rem;
+  }
+  .site-header .logo {
+    width: 38px;
+    left: 10px;
+  }
+  body {
+    padding-top: 52px;
+  }
+}
