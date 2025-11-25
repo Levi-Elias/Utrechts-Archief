@@ -1,19 +1,40 @@
 <?php include 'includes/header.php'; ?>
 
-    <main>
-
+<main>
         <div class="panorama">
-            <img src="img/1.jpg" alt="Panorama Image 1"
+            <div class="info-container">
+              <div class="info-icon" id="infoButton">i</div>
+            
+              <div class="info-panel" id="infoPanel">
+                Dit is info
+              </div>
+            </div>
+            
+            <script>
+              const button = document.getElementById("infoButton");
+              const panel = document.getElementById("infoPanel");
+            
+              // Voor touchscreen apparaten
+              button.addEventListener("touchstart", function () {
+                panel.classList.toggle("active");
+              });
+            
+              // Voor computers / laptops
+              button.addEventListener("click", function () {
+                panel.classList.toggle("active");
+              });
+            </script>
+            <img src="img/1.jpg" alt="Panorama Image 1" class="image"
                 style="height: 500px; z-index: 1; margin-left: 0px; margin-top: 0px;">
-            <img src="img/2.jpg" alt="Panorama Image 2"
+            <img src="img/2.jpg" alt="Panorama Image 2" class="image"
                 style="height: 500px; z-index: 2; margin-left: 0px; margin-top: 0px;">
-            <img src="img/3.jpg" alt="Panorama Image 3"
+            <img src="img/3.jpg" alt="Panorama Image 3" class="image"
                 style="height: 497.5px; z-index: 3; margin-left: -40px; margin-top: -1px;">
-            <img src="img/4.jpg" alt="Panorama Image 4"
+            <img src="img/4.jpg" alt="Panorama Image 4" class="image"
                 style="height: 500px; z-index: 4; margin-left: -43px; margin-top: -5px;">
-            <img src="img/5.jpg" alt="Panorama Image 5"
+            <img src="img/5.jpg" alt="Panorama Image 5" class="image"
                 style="height: 506px; z-index: 5; margin-left: -56px; margin-top: -8px;">
-            <img src="img/6.jpg" alt="Panorama Image 6"
+            <img src="img/6.jpg" alt="Panorama Image 6" class="image"
                 style="height: 511px; z-index: 6; margin-left: -60px; margin-top: -12px;">
             <img src="img/7.jpg" alt="Panorama Image 7"
                 style="height: 523px; z-index: 8; margin-left: -71px; margin-top: -13px;">

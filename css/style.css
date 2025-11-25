@@ -5,6 +5,10 @@ main .panorama {
   max-height: 500px;
   overflow-y: scroll;
 }
+.image{
+  display: inline-block;
+  position: relative;
+}
 .container-header {
   background-color: #ffffff;
   text-align: center;
@@ -14,4 +18,73 @@ main .panorama {
   width: 50px;
   height: 50px;
   margin: 10px;
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+  background: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+  .info-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .info-icon {
+    width: 30px;
+    height: 30px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: sans-serif;
+    user-select: none;
+    z-index: 100000;
+  }
+
+  .info-panel {
+    position: absolute;
+    top: 40px;
+    left: 110px;
+    background: #f1f1f1;
+    padding: 12px;
+    border-radius: 8px;
+    width: 220px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: 0.25s;
+    z-index: 100000;
+  }
+
+  .info-panel.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 20px;
+  left: 200px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  z-index: 100000;
 }
