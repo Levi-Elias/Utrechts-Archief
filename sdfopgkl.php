@@ -13,31 +13,6 @@ include 'includes/connect.php';
 ]
 ?>
 <main>
-<div class="map">
-  
-  <div class="map-item map-item1">
-    <a class="marker marker1" href="#marker1">1</a>
-
-    <aside id="marker1" class="map-popup">
-      <h3 class="popup-title">Popup Title</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia pariatur laudantium deserunt minima delectus illum dolor, nesciunt sit iure, debitis eligendi blanditiis, tempore quidem cupiditate quaerat incidunt sapiente aliquam? Debitis!</p>
-      <a class="btn" href="#">Find Out More</a>
-    </aside>
-  </div>
-  
-  <div class="map-item map-item2">
-    <a class="marker marker2" href="#marker2">2</a>
-
-    <aside id="marker2" class="map-popup">
-      <h3 class="popup-title">Popup Title</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia pariatur laudantium deserunt minima delectus illum dolor, nesciunt sit iure, debitis eligendi blanditiis, tempore quidem cupiditate quaerat incidunt sapiente aliquam? Debitis!</p>
-      <a class="btn" href="#">Find Out More</a>
-    </aside>
-  </div>
-  
-</div>
-
-
         <div class="panorama">
             <div class="info-container">
               <div class="info-icon" id="infoButton">i</div>
@@ -46,23 +21,24 @@ include 'includes/connect.php';
                       Dit is info
                     </div>
                     <?php 
-                    $stmt = $conn->prepare( "SELECT * FROM panorama" );
-                    $stmt->execute();
-                    $hotspotsarray = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // print_r($hotspotsarray);
-                    
-                    foreach ($hotspotsarray as $hotspot) {
+                        foreach ($hotspotsarray as $hotspot) {
                             $id = $hotspot['id'];
-                            $left = $hotspot['left-pos'];
-                            $top = $hotspot['top-pos'];
+                            $left = $hotspot['left'];
+                            $top = $hotspot['top'];
                             $text = $hotspot['text'];
                             echo "<div class='overlay-text' style='left: {$left}px; top: {$top}px;'>$text</div>";
-                    
+                            
+                            $stmt = $conn->prepare( "SELECT * FROM panorama" );
+                            $stmt->execute();
+                              $text = $stmt->fetch(PDO::FETCH_ASSOC)['text'];
+        
                               ?>
-                              <!-- <div class="overlay-text"><?php echo ($text); ?></div> -->
-                            <?php
+                              <div class="overlay-text"><?php echo ($text); ?></div>
+                                <?php
                             }
-                     ?>
+                    ?>
+    </div>
+
                 </div>
             <script>
               const button = document.getElementById("infoButton");
