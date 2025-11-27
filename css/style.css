@@ -39,23 +39,23 @@ main .panorama {
   .info-icon {
     width: 30px;
     height: 30px;
+    left: 100px;
+    top: 100px;
     background-color: #007bff;
     color: white;
     border-radius: 50%;
     display: flex;
+    position: absolute;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-weight: bold;
-    font-family: sans-serif;
-    user-select: none;
     z-index: 100000;
   }
 
   .info-panel {
     position: absolute;
-    top: 40px;
-    left: 110px;
+    top: 120px;
+    left: 130px;
     background: #f1f1f1;
     padding: 12px;
     border-radius: 8px;
@@ -81,7 +81,7 @@ main .panorama {
 .overlay-text {
   position: absolute;
   top: 20px;
-  left: 200px;
+  left: 20px;
   background: rgba(0,0,0,0.6);
   color: white;
   padding: 8px 12px;

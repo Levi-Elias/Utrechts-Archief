@@ -4,12 +4,11 @@
         <div class="panorama">
             <div class="info-container">
               <div class="info-icon" id="infoButton">i</div>
-            
-              <div class="info-panel" id="infoPanel">
-                Dit is info
-              </div>
-            </div>
-            
+                  
+                  <div class="info-panel" id="infoPanel">
+                      Dit is info
+                    </div>
+                </div>
             <script>
               const button = document.getElementById("infoButton");
               const panel = document.getElementById("infoPanel");
@@ -24,6 +23,7 @@
                 panel.classList.toggle("active");
               });
             </script>
+                
             <img src="img/1.jpg" alt="Panorama Image 1" class="image"
                 style="height: 500px; z-index: 1; margin-left: 0px; margin-top: 0px;">
             <img src="img/2.jpg" alt="Panorama Image 2" class="image"
