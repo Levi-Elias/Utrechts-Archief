@@ -19,6 +19,236 @@ main .panorama {
   height: 50px;
   margin: 10px;
 }
+main .panorama {
+    display: flex;
+    flex-direction: row;
+    max-height: 500px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    position: relative;   
+    margin-bottom: 70px; /* spacing so minimap sits clearly under the panorama */
+    z-index: 1; /* keep panorama under the minimap area */
+    -webkit-overflow-scrolling: touch; /* momentum scrolling on iOS */
+    touch-action: pan-x; /* let horizontal pans scroll panorama by default */
+}
+.logo {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+}
+
+/* Header - fixed, gray, compact */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 56px; /* compact height */
+  background: #e9e9e9; /* grijs, aanpasbaar */
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center the title */
+  position: relative;
+}
+
+.site-title {
+  margin: 0;
+  font-size: 1rem; /* niet te groot */
+  font-weight: 600;
+  color: #111;
+  /* Font stack: dicht bij zakelijke/site-typografie (pas aan indien je een specifieke font-bestand wilt gebruiken) */
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Logo stays left while title remains centered */
+.site-header .logo {
+  position: absolute;
+  left: 12px;
+  width: 44px;
+  height: auto;
+}
+/* Prevent content from being hidden behind header */
+body {
+  padding-top: 56px;
+}
+
+/* iPad / tablet specific adjustments */
+/* iPad landscape and similar tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .site-header {
+    height: 56px;
+  }
+  /* media-specific overrides for header kept minimal */
+  .site-header .logo {
+    width: 42px;
+    left: 14px;
+  }
+  body {
+    padding-top: 56px;
+  }
+}
+
+/* iPad portrait / smaller tablets and phones */
+@media (max-width: 767px) {
+  .site-header {
+    height: 52px;
+  }
+  .site-title {
+    font-size: 0.95rem;
+  }
+  .site-header .logo {
+    width: 38px;
+    left: 10px;
+  }
+  body {
+    padding-top: 52px;
+  }
+}
+
+
+
+/* Minimale balk (updated - glassy thumbnail strip) */
+#minimap {
+  position: relative;
+  width: 70%;
+  height: 120px; /* more room so thumbnails can be larger and wrap to two rows */
+  min-height: 88px; /* ensure it's never collapsed */
+  display: block !important;
+  z-index: 10000 !important; /* sit above panorama */
+  margin: 25px auto;
+  background: linear-gradient(180deg, rgba(12,12,12,0.26), rgba(8,8,8,0.14));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.025);
+  backdrop-filter: blur(6px) saturate(0.85);
+  cursor: pointer;
+  user-select: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y; /* allow vertical page scroll but let horizontal gestures be handled by JS */
+}
+
+/* Track holds the scaled thumbnails */
+/* Track holds the scaled thumbnails (horizontally scrollable) */
+#minimap-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: auto; /* allow scrolling when thumbs don't all fit */
+  overflow-y: hidden;
+  padding: 4px 6px; /* slightly smaller padding so thumbs reach edges more closely */
+  box-sizing: border-box;
+  gap: 0; /* no gap — thumbnails sit flush beside each other */
+  scroll-behavior: smooth; /* smooth auto-scroll when JS changes scrollLeft */
+  -webkit-overflow-scrolling: touch; /* momentum on iOS */
+  transform-origin: 0 50%; /* enable track scaling from left-to-right */
+  transition: transform 160ms cubic-bezier(.2,.9,.15,1);
+}
+
+/* hide native scrollbar but keep scrolling available */
+#minimap-track::-webkit-scrollbar { height: 8px; }
+#minimap-track::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 6px; }
+#minimap-track::-webkit-scrollbar-track { background: transparent; }
+#minimap-track { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.18) transparent; }
+
+/* Rode pointer */
+/* pointer removed by request - kept in markup for compatibility but hidden */
+#minimap-pointer { display: none; }
+
+  /* thumb images inside minimap */
+  .minimap-thumb {
+    height: calc(50% - 14px); /* when two rows, each thumb uses ~half the track height */
+    object-fit: cover;
+    margin-right: 0; /* no spacing - sit adjacent like the panorama */
+    flex-shrink: 0; /* don't shrink - widths will be set by JS */
+    border-radius: 6px;
+    opacity: 0.95;
+    filter: saturate(0.98) contrast(0.98);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    transition: transform 160ms ease, box-shadow 160ms ease, opacity 120ms ease;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .minimap-thumb:hover { transform: translateY(-3px) scale(1.04); opacity: 1; }
+
+/* Zoom controls (small +/- buttons inside minimap) */
+.minimap-controls {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 10003;
+}
+.minimap-controls button {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+.minimap-controls button:active { transform: translateY(1px); }
+.minimap-controls button[disabled] { opacity: 0.35; cursor: default; }
+
+/* active thumbnail styling */
+.active-thumb {
+    outline: 2px solid rgba(255,92,75,0.95);
+    box-shadow: 0 8px 20px rgba(255,92,75,0.12), 0 4px 10px rgba(0,0,0,0.35);
+    transform: translateY(-6px) scale(1.06);
+}
+
+  /* When thumbnails wrap to two rows we'll limit their max-height for consistent visuals */
+  @media (min-width: 900px) {
+    .minimap-thumb { height: calc(50% - 14px); }
+  }
+  @media (max-width: 899px) {
+    #minimap { height: 90px; }
+    .minimap-thumb { height: calc(50% - 10px); }
+  }
+  .minimap-thumb { touch-action: manipulation; -webkit-tap-highlight-color: rgba(0,0,0,0.15); }
+
+/* Zoom cirkel */
+#minimap-zoom {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(3px);
+    transition: opacity 0.08s linear, left 0.08s linear;
+}
+
+  /* The translucent viewport marker was removed per design - keep element hidden */
+  #minimap-viewport { display: none; }
 
 .icon {
   width: 25px;
