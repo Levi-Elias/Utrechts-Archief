@@ -46,16 +46,16 @@ include 'includes/connect.php';
                       Dit is info
                     </div>
                     <?php 
-                    $stmt = $conn->prepare( "SELECT * FROM panorama" );
+                    $stmt = $conn->prepare( "SELECT * FROM hotspots" );
                     $stmt->execute();
                     $hotspotsarray = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // print_r($hotspotsarray);
                     
                     foreach ($hotspotsarray as $hotspot) {
                             $id = $hotspot['id'];
-                            $left = $hotspot['left-pos'];
-                            $top = $hotspot['top-pos'];
-                            $text = $hotspot['text'];
+                            $left = $hotspot['x_coord'];
+                            $top = $hotspot['y_coord'];
+                            $text = $hotspot['beschrijving'];
                             echo "<div class='overlay-text' style='left: {$left}px; top: {$top}px;'>$text</div>";
                     
                               ?>
