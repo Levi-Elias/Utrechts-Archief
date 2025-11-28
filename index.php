@@ -146,7 +146,18 @@ include 'includes/connect.php';
             <img src="img/33.jpg" alt="Panorama Image 33"
                 style="height: 539px; z-index: 33; margin-left: -45px; margin-top: -2px;">
         </div>
-    </main>
+
+
+    <div id="minimap">
+        <div id="minimap-track"></div>
+        <div id="minimap-viewport"></div>
+        <div id="minimap-pointer"></div>
+        <div id="minimap-zoom"></div>
+    </div>
+
+
+</main>
+<script src="js/panorama.js"></script>
 </body>
 
 </html>
