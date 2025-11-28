@@ -15,57 +15,44 @@ include 'includes/connect.php';
 <main>
 <div class="map">
   
-  <div class="map-item map-item1">
-    <a class="marker marker1" href="#marker1">1</a>
+    
 
-    <aside id="marker1" class="map-popup">
-      <h3 class="popup-title">Popup Title</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia pariatur laudantium deserunt minima delectus illum dolor, nesciunt sit iure, debitis eligendi blanditiis, tempore quidem cupiditate quaerat incidunt sapiente aliquam? Debitis!</p>
-      <a class="btn" href="#">Find Out More</a>
-    </aside>
-  </div>
-  
-  <div class="map-item map-item2">
-    <a class="marker marker2" href="#marker2">2</a>
 
-    <aside id="marker2" class="map-popup">
-      <h3 class="popup-title">Popup Title</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia pariatur laudantium deserunt minima delectus illum dolor, nesciunt sit iure, debitis eligendi blanditiis, tempore quidem cupiditate quaerat incidunt sapiente aliquam? Debitis!</p>
-      <a class="btn" href="#">Find Out More</a>
-    </aside>
-  </div>
-  
 </div>
 
 
-        <div class="panorama">
-            <div class="info-container">
-              <div class="info-icon" id="infoButton">i</div>
-                  
-                  <div class="info-panel" id="infoPanel">
-                      Dit is info
-                    </div>
+<div class="panorama">
+    <div class="info-container">
+        
                     <?php 
                     $stmt = $conn->prepare( "SELECT * FROM hotspots" );
                     $stmt->execute();
                     $hotspotsarray = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // print_r($hotspotsarray);
                     
                     foreach ($hotspotsarray as $hotspot) {
                             $id = $hotspot['id'];
                             $left = $hotspot['x_coord'];
                             $top = $hotspot['y_coord'];
                             $text = $hotspot['beschrijving'];
-                            echo "<div class='overlay-text' style='left: {$left}px; top: {$top}px;'>$text</div>";
-                    
-                              ?>
-                              <!-- <div class="overlay-text"><?php echo ($text); ?></div> -->
+                            // echo "<div class='overlay-text' style='left: {$left}px; top: {$top}px;'>$text</div>";
+                            ?>
+                            <div class="map-item map-item1" style="left: <?php echo $left; ?>px; top: <?php echo $top; ?>px;">
+                              <a class="marker marker1"  href="#marker<?php echo $id; ?>"><?php echo $id; ?></a>
+                            
+                              <aside id="<?php echo 'marker' . $id; ?>" class="map-popup">
+                                <div class="map-popup-content">
+                                  <h3>Hotspot <?php echo $id; ?></h3>
+                                  <p><?php echo $text; ?></p>
+                                </div>
+
+                              </aside>
+                            </div>
                             <?php
-                            }
+                        }
                      ?>
                 </div>
-            <script>
-              const button = document.getElementById("infoButton");
+                <script>
+                    const button = document.getElementById("infoButton");
               const panel = document.getElementById("infoPanel");
             
               // Voor touchscreen apparaten
@@ -157,6 +144,95 @@ include 'includes/connect.php';
 
 
 </main>
+</main>
+
+<!-- Popup positioning for markers: toggle and place popup to the left/right so it doesn't cover the marker -->
+<script>
+(function(){
+    const map = document.querySelector('.map');
+    if(!map) return;
+
+    const markers = document.querySelectorAll('.marker');
+
+    function closeAll() {
+        document.querySelectorAll('.map-popup.open').forEach(p => {
+            p.classList.remove('open');
+            p.style.left = '';
+            p.style.top = '';
+        });
+    }
+
+    function positionPopup(popup, marker) {
+        const mapRect = map.getBoundingClientRect();
+        const markerRect = marker.getBoundingClientRect();
+
+        // Measure popup after making it visible
+        popup.style.visibility = 'hidden';
+        popup.classList.add('measuring');
+        popup.style.display = 'block';
+        const popupRect = popup.getBoundingClientRect();
+        const popupW = popupRect.width || 280;
+        const popupH = popupRect.height || 160;
+        popup.classList.remove('measuring');
+        popup.style.visibility = '';
+
+        // Vertical center aligned to marker
+        let top = markerRect.top + (markerRect.height / 2) - (popupH / 2) - mapRect.top;
+        // keep inside map bounds
+        if (top < 8) top = 8;
+        if (top + popupH > mapRect.height - 8) top = Math.max(8, mapRect.height - popupH - 8);
+
+        // Prefer placing to the right of the marker (small gap)
+        // If there's not enough room on the right, place left (small gap)
+        if (left + popupW > mapRect.width - 8) {
+            left = markerRect.left - mapRect.left - popupW - 6;
+        }
+
+        popup.style.top = Math.round(top) + 'px';
+        popup.style.left = Math.round(left) + 'px';
+    }
+
+    markers.forEach(marker => {
+        marker.addEventListener('click', function(e) {
+            e.preventDefault();
+            const id = this.getAttribute('href').replace('#', '');
+            const popup = document.getElementById(id);
+            if (!popup) return;
+
+            const alreadyOpen = popup.classList.contains('open');
+            closeAll();
+            if (!alreadyOpen) {
+                popup.classList.add('open');
+                // Position after it's visible so sizes are correct
+                positionPopup(popup, this);
+            }
+        });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.marker') && !e.target.closest('.map-popup')) {
+            closeAll();
+        }
+    });
+
+    // Reposition open popups on resize/scroll
+    window.addEventListener('resize', function() {
+        document.querySelectorAll('.map-popup.open').forEach(popup => {
+            const marker = document.querySelector(`a[href="#${popup.id}"]`);
+            if (marker) positionPopup(popup, marker);
+        });
+    });
+    window.addEventListener('scroll', function() {
+        document.querySelectorAll('.map-popup.open').forEach(popup => {
+            const marker = document.querySelector(`a[href="#${popup.id}"]`);
+            if (marker) positionPopup(popup, marker);
+        });
+    }, true);
+
+})();
+</script>
+
 <script src="js/panorama.js"></script>
 </body>
 
