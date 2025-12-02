@@ -1,15 +1,15 @@
 <?php 
-include 'header_cms.php';
+include '../includes/header.php';
 include '../includes/connect.php';
 
-if (isset($_GET['image_url']) && isset($_GET['title']) && !empty($_GET['image_url']) && !empty($_GET['title'])) {
-    $image_url = htmlspecialchars($_GET['image_url']);
-    $title = htmlspecialchars($_GET['title']);
+if (isset($_GET['beschrijving']) && isset($_GET['naam']) && !empty($_GET['beschrijving']) && !empty($_GET['naam'])) {
+    $beschrijving = htmlspecialchars($_GET['beschrijving']);
+    $naam = htmlspecialchars($_GET['naam']);
     
-    $stmt = $conn->prepare("INSERT INTO slideshow (image_url, title)
-  VALUES (:image_url, :title)");
-  $stmt->bindParam(':image_url', $image_url);
-  $stmt->bindParam(':title', $title);
+    $stmt = $conn->prepare("INSERT INTO hotspots (beschrijving, naam)
+  VALUES (:beschrijving, :naam)");
+  $stmt->bindParam(':beschrijving', $beschrijving);
+  $stmt->bindParam(':naam', $naam);
 
   // insert a row
   $stmt->execute();
@@ -22,35 +22,33 @@ if (isset($_GET['image_url']) && isset($_GET['title']) && !empty($_GET['image_ur
 </div>
 <div class="cms-container">
 
-    <?php include '../includes/cms_links_paginas.php'; ?>
-
     <div class="cms-inhoud">
     <form action="homepagina_cms.php" method="GET">
-        <label for="image_url" class="gegevens">image_url:</label>
-        <input type="url" id="image_url" name="image_url" placeholder="Enter your image_url" required class="gegevens_invoer"><br>
+        <label for="beschrijving" class="gegevens">beschrijving:</label>
+        <input type="url" id="beschrijving" name="beschrijving" placeholder="Enter your beschrijving" required class="gegevens_invoer"><br>
         
-        <label for="title" class="gegevens">title:</label>
-        <input type="text" id="title" name="title" placeholder="Enter your title" required class="gegevens_invoer"><br>
+        <label for="naam" class="gegevens">naam:</label>
+        <input type="text" id="naam" name="naam" placeholder="Enter your naam" required class="gegevens_invoer"><br>
 
         <button type="submit" class="aanmelden_button">toevoegen</button>
     </form>
 
 
     <?php
-$pdo = new PDO("mysql:host=localhost;dbname=5.2cms", "root", "");
+$pdo = new PDO("mysql:host=localhost;dbname=utrechtarchief", "root", "");
 
 // $id = 6; // voorbeeld-id
-$stmt = $pdo->prepare("SELECT * FROM slideshow");
+$stmt = $pdo->prepare("SELECT * FROM hotspots");
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt->execute();
-foreach ($result as $slideshow) {
+foreach ($result as $hotspots) {
     echo "<div>";
-    echo "<h3>" . htmlspecialchars($slideshow['title']) . "</h3>";
-    echo "<img src='" . htmlspecialchars($slideshow['image_url']) . "' alt='" . htmlspecialchars($slideshow['title']) . "' style='max-width:200px;'><br>";
+    echo "<h3>" . htmlspecialchars($hotspots['naam']) . "</h3>";
+    echo "<h3>" . htmlspecialchars($hotspots['beschrijving']) . "</h3>";
 
     echo "<form method='post' action='homepagina_cms.php' onsubmit='return confirm(\"Weet je zeker dat je dit wilt verwijderen?\");'>";
-    echo "<input type='hidden' name='id' value='" . htmlspecialchars($slideshow['id']) . "'>";
+    echo "<input type='hidden' name='id' value='" . htmlspecialchars($hotspots['id']) . "'>";
     echo "<button type='submit'>Verwijderen</button>";
     echo "</form>";
 
@@ -59,7 +57,7 @@ foreach ($result as $slideshow) {
 
 if (isset($_POST['id'])) {
     $id = (int)$_POST['id']; // zorg dat het een integer is
-    $stmt = $conn->prepare("DELETE FROM slideshow WHERE id = :id");
+    $stmt = $conn->prepare("DELETE FROM hotspots WHERE id = :id");
     $stmt->bindParam(':id', $id);
     $stmt->execute();
 
