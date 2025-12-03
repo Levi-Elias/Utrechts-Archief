@@ -504,3 +504,137 @@ img {
     border-color: transparent transparent transparent #fff;
   }
 }
+
+.login-container{
+  width: 500px;
+  height: 500px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: black;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_button{
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login_button button{
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.aanmelden_button{
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.aanmelden_button button{
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.gegevens{
+  margin-bottom: 15px;
+  width: 300px;
+  height: 30px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.gegevens_invoer{
+  margin-bottom: 15px;
+  width: 300px;
+  height: 30px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.heading-primary {
+font-size: 22px;
+margin-bottom: 15px;
+}
+
+.table-wrapper {
+width: 100%;
+overflow-x: auto;
+}
+
+.data-table {
+width: 100%;
+border-collapse: collapse;
+background: white;
+border-radius: 8px;
+overflow: hidden;
+box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.data-table__header {
+background: #e9edf3;
+font-weight: bold;
+padding: 10px;
+text-align: left;
+border-bottom: 2px solid #ccc;
+}
+
+.data-table__cell {
+padding: 10px;
+border-bottom: 1px solid #ddd;
+}
+
+.data-table__row:nth-child(even) {
+background: #f7f9fc;
+}
+
+@media (max-width: 700px) {
+.data-table, .data-table thead, .data-table tbody, .data-table__row, .data-table__cell, .data-table__header { display: block; }
+.data-table thead { display: none; }
+
+.data-table__row {
+background: #fff;
+margin-bottom: 12px;
+padding: 12px;
+border-radius: 8px;
+box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.data-table__cell {
+padding: 8px 0;
+border: none;
+}
+
+.data-table__cell::before {
+content: attr(data-label) ": ";
+font-weight: bold;
+color: #333;
+}
+}

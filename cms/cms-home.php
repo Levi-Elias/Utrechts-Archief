@@ -4,14 +4,18 @@
 include '../includes/header.php';
 include '../includes/connect.php';
 
-if (isset($_GET['beschrijving']) && isset($_GET['naam']) && !empty($_GET['beschrijving']) && !empty($_GET['naam'])) {
+if (isset($_GET['beschrijving']) && isset($_GET['naam']) && isset($_GET['x_coord']) && isset($_GET['y_coord']) && !empty($_GET['beschrijving']) && !empty($_GET['naam']) && !empty($_GET['x_coord']) && !empty($_GET['y_coord'])) {
     $beschrijving = htmlspecialchars($_GET['beschrijving']);
     $naam = htmlspecialchars($_GET['naam']);
+    $x_coord = htmlspecialchars($_GET['x_coord']);
+    $y_coord = htmlspecialchars($_GET['y_coord']);
     
-    $stmt = $conn->prepare("INSERT INTO hotspots (beschrijving, naam)
-  VALUES (:beschrijving, :naam)");
+    $stmt = $conn->prepare("INSERT INTO hotspots (beschrijving, naam, x_coord, y_coord)
+  VALUES (:beschrijving, :naam, :x_coord, :y_coord)");
   $stmt->bindParam(':beschrijving', $beschrijving);
   $stmt->bindParam(':naam', $naam);
+  $stmt->bindParam(':x_coord', $x_coord);
+  $stmt->bindParam(':y_coord', $y_coord);
 
   // insert a row
   $stmt->execute();
@@ -25,14 +29,21 @@ if (isset($_GET['beschrijving']) && isset($_GET['naam']) && !empty($_GET['beschr
 <div class="cms-container">
 
     <div class="cms-inhoud">
-    <form action="homepagina_cms.php" method="GET">
-        <label for="beschrijving" class="gegevens">beschrijving:</label>
-        <input type="url" id="beschrijving" name="beschrijving" placeholder="Enter your beschrijving" required class="gegevens_invoer"><br>
-        
+    <form action="cms-home.php" method="GET">
         <label for="naam" class="gegevens">naam:</label>
         <input type="text" id="naam" name="naam" placeholder="Enter your naam" required class="gegevens_invoer"><br>
+        
+        <label for="beschrijving" class="gegevens">beschrijving:</label>
+        <input type="text" id="beschrijving" name="beschrijving" placeholder="Enter your beschrijving" required class="gegevens_invoer"><br>
 
+        <label for="x_coord" class="gegevens">x_coord:</label>
+        <input type="number" id="x_coord" name="x_coord" placeholder="Enter your x_coord" required class="gegevens_invoer"><br>
+
+        <label for="y_coord" class="gegevens">y_coord:</label>
+        <input type="number" id="y_coord" name="y_coord" placeholder="Enter your y_coord" required class="gegevens_invoer"><br>
+        
         <button type="submit" class="aanmelden_button">toevoegen</button>
+
     </form>
 
 <div class="table-wrapper">
@@ -43,6 +54,7 @@ if (isset($_GET['beschrijving']) && isset($_GET['naam']) && !empty($_GET['beschr
             <th class="data-table__header">Beschrijving</th>
             <th class="data-table__header">X_coord</th>
             <th class="data-table__header">Y_coord</th>
+            <th class="data-table__header">delete</th>
         </tr>
     </thead>
 
@@ -70,19 +82,21 @@ $stmt->execute();
 
                 <td class="data-table__cell" data-label="Y_coord">
                     <?= htmlspecialchars($rij['y_coord']); ?>
+                    </td>
+
+                <td class="data-table__cell" data-label="Y_coord">
+                    <?php
+                        echo "<form method='post' action='cms-home.php' onsubmit='return confirm(\"Weet je zeker dat je dit wilt verwijderen?\");'>";
+                        echo "<input type='hidden' name='id' value='" . htmlspecialchars($rij['id']) . "'>";
+                        echo "<button type='submit'>Verwijderen</button>";
+                        echo "</form>";
+                    ?>  
                 </td>
-            </tr>
-            <?php
-                echo "<form method='post' action='homepagina_cms.php' onsubmit='return confirm(\"Weet je zeker dat je dit wilt verwijderen?\");'>";
-    echo "<input type='hidden' name='id' value='" . htmlspecialchars($hotspots['id']) . "'>";
-    echo "<button type='submit'>Verwijderen</button>";
-    echo "</form>";
-            ?>
+                </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
 </div>
-
 <?php
 if (isset($_POST['id'])) {
     $id = (int)$_POST['id']; // zorg dat het een integer is
@@ -90,14 +104,9 @@ if (isset($_POST['id'])) {
     $stmt->bindParam(':id', $id);
     $stmt->execute();
 
-    echo "Record verwijderd!";
 } else {
-    echo "Geen ID ontvangen om te verwijderen.";
 }
-
-
 ?>
-
     </div>
 
 </div>
