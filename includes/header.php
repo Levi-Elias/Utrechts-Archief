@@ -13,6 +13,6 @@
     <header class="site-header">
         <div class="header-inner">
             <img src="img/logo.png" alt="logo Utrechts Archief" class="logo">
-            <h1 class="site-title">Panorama Rondleiding</h1>
+            <img src="img/navbar.png" alt="navbar Utrechts Archief" class="site-title">
         </div>
     </header>
