@@ -62,8 +62,6 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
   padding: 8px 12px;
   border-radius: 6px;
   z-index: 100000;
@@ -637,4 +635,36 @@ content: attr(data-label) ": ";
 font-weight: bold;
 color: #333;
 }
+}
+
+/* #mydivheader {
+  position: absolute;
+   line-height: 36px;
+  text-align: center;
+  padding: 10px;
+  cursor: move;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  z-index: 10;
+  background-color: tomato;
+  color: #fff;
+} */
+
+.map-item {
+  position: absolute;
+   line-height: 36px;
+  text-align: center;
+  padding: 10px;
+  cursor: move;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  z-index: 10;
+  background-color: tomato;
+  color: #ffffff;
+}
+
+.map-popup-content{
+  color: black;
 }
