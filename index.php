@@ -1,6 +1,6 @@
 <?php 
-include 'includes/header.php'; 
 include 'includes/connect.php';
+include 'includes/header.php'; 
 ?>
 
 <?php $hotspotsarray = 
@@ -13,12 +13,7 @@ include 'includes/connect.php';
 ]
 ?>
 <main>
-<div class="map">
-  
-    
-
-
-</div>
+<div class="map"></div>
 
 
 <div class="panorama">
@@ -66,17 +61,17 @@ include 'includes/connect.php';
               });
             </script>
                 
-            <img src="img/1.jpg" alt="Panorama Image 1" class="image"
+            <img src="img/1.jpg" alt="Panorama Image 1"
                 style="height: 500px; z-index: 1; margin-left: 0px; margin-top: 0px;">
-            <img src="img/2.jpg" alt="Panorama Image 2" class="image"
+            <img src="img/2.jpg" alt="Panorama Image 2"
                 style="height: 500px; z-index: 2; margin-left: 0px; margin-top: 0px;">
-            <img src="img/3.jpg" alt="Panorama Image 3" class="image"
+            <img src="img/3.jpg" alt="Panorama Image 3"
                 style="height: 497.5px; z-index: 3; margin-left: -40px; margin-top: -1px;">
-            <img src="img/4.jpg" alt="Panorama Image 4" class="image"
+            <img src="img/4.jpg" alt="Panorama Image 4"
                 style="height: 500px; z-index: 4; margin-left: -43px; margin-top: -5px;">
-            <img src="img/5.jpg" alt="Panorama Image 5" class="image"
+            <img src="img/5.jpg" alt="Panorama Image 5"
                 style="height: 506px; z-index: 5; margin-left: -56px; margin-top: -8px;">
-            <img src="img/6.jpg" alt="Panorama Image 6" class="image"
+            <img src="img/6.jpg" alt="Panorama Image 6""
                 style="height: 511px; z-index: 6; margin-left: -60px; margin-top: -12px;">
             <img src="img/7.jpg" alt="Panorama Image 7"
                 style="height: 523px; z-index: 8; margin-left: -71px; margin-top: -13px;">

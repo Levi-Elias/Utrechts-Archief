@@ -3,6 +3,8 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 
+define('BASE_URL', 'http://localhost/Utrechts-Archief/');
+// echo BASE_URL;
 try {
   $conn = new PDO("mysql:host=$servername;dbname=utrechtarchief", $username, $password);
   // set the PDO error mode to exception
