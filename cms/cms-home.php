@@ -1,4 +1,4 @@
-<?php 
+<?php
 include '../includes/connect.php';
 include '../includes/header.php';
 
@@ -73,21 +73,20 @@ if (isset($_GET['beschrijving']) && isset($_GET['naam']) && isset($_GET['x_coord
                         <!-- <div id="mydivheader">drag</div> -->
                 </div>
                 <script>
-                    const button = document.getElementById("infoButton");
-              const panel = document.getElementById("infoPanel");
+            //         const button = document.getElementById("infoButton");
+            //   const panel = document.getElementById("infoPanel");
             
-              // Voor touchscreen apparaten
-              button.addEventListener("touchstart", function () {
-                panel.classList.toggle("active");
-              });
+            //   // Voor touchscreen apparaten
+            //   button.addEventListener("touchstart", function () {
+            //     panel.classList.toggle("active");
+            //   });
             
-              // Voor computers / laptops
-              button.addEventListener("click", function () {
-                panel.classList.toggle("active");
-              });
+            //   // Voor computers / laptops
+            //   button.addEventListener("click", function () {
+            //     panel.classList.toggle("active");
+            //   });
             </script>
-
-
+        
             <img src="../img/1.jpg" alt="Panorama Image 1"
                 style="height: 500px; z-index: 1; margin-left: 0px; margin-top: 0px;">
             <img src="../img/2.jpg" alt="Panorama Image 2"
@@ -271,7 +270,7 @@ if (isset($_GET['beschrijving']) && isset($_GET['naam']) && isset($_GET['x_coord
     })();
     </script>
 
-    <script src="../js/dnd.js"></script>
+    </script>
     
     <div class="table-wrapper">
         <table class="data-table">

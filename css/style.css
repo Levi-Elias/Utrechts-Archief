@@ -699,9 +699,17 @@ color: #333;
   border-radius: 50%;
   width: 36px;
   height: 36px;
-  z-index: 10;
+  z-index: 1000;
   background-color: tomato;
   color: #ffffff;
+}
+
+.hotspot-marker {
+  position: absolute;
+  padding: 10px;
+  cursor: move;
+  border-radius: 50%;
+  z-index: 10;
 }
 
 .map-popup-content{
