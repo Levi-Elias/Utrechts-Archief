@@ -229,6 +229,9 @@ include 'includes/header.php';
 </script>
 
 <script src="js/panorama.js"></script>
+
+<?php include 'includes/footer.php'; ?>
 </body>
+
 
 </html>
