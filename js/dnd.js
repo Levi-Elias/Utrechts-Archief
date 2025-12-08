@@ -40,6 +40,27 @@ function dragElement(elmnt) {
     // --- ALERT MET X EN Y POSITIE ---
     const x = elmnt.offsetLeft;
     const y = elmnt.offsetTop;
+    let id = elmnt.getAttribute('data-id');
     alert("X: " + x + " | Y: " + y);
+
+
+            let data = {
+                id: id,
+                x_coord: x,
+                y_coord: y
+              }
+              let URL = 'cms/cms_opslaan_coordinaten.php';
+              
+              verstuurknop.addEventListener('click', verstuurData);
+              async function verstuurData() {
+              let verstuurknop = document.getElementById('verstuurknop');
+                 const reponseData = await fetch(URL, {
+                    method: 'post',
+                    body: JSON.stringify(data)
+                }).then(response => response.json());
+                console.log(reponseData);
+                document.getElementById('opgeslagen_data').innerText = 'de id is : ' + reponseData.id + ', de x coordinaat is : ' + reponseData.x_coordinaat + ', de y coordinaat is : ' + reponseData.y_coordinaat;
+            }
+    
   }
 }
